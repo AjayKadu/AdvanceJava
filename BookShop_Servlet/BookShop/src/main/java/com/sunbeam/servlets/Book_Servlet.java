@@ -36,12 +36,17 @@ public class Book_Servlet extends HttpServlet {
 		try (BookDao dao = new BookDao()) {
 
 			List<Book> list = dao.findbySubject(subject);
+			
+			out.println("<form method='post' action='cart'>");
 			for (Book bk : list) {
 				
-				out.printf("<input type='checkbox' name='book'>%s - %s" ,bk.getName(), bk.getAuthor());
+				out.printf("<input type='checkbox' name='book' value='%d'>%s - %s" , bk.getId(),  bk.getName(), bk.getAuthor());
 				out.println("<br>");
 			}
-
+			
+			out.println("<input type='submit' value='Add Cart'>");
+			
+			out.println("</form>");
 		}
 
 		catch (Exception e) {
