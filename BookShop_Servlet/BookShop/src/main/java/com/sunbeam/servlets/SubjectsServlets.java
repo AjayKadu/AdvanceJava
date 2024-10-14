@@ -25,16 +25,21 @@ public class SubjectsServlets extends HttpServlet {
 		try(BookDao b1 = new BookDao()){
 		
 		   List<String> list = b1.findAllSubject();
+		   
 		   out.println("<html>");
 		   out.println("<head>");
 		   out.println("<title>All Subjects</title>");
 		   out.println("</head>");
 		   out.println("<body>");
+		   out.println("<form method='post' action='books'>");
 		   
+		   out.println("<h1>List of Subjects</h1>");
 		   for (String subject : list) {
                out.printf("<input type='radio' name='subject' value='%s'> %s<br>", subject,subject);
            }
 		   
+		   out.println("<input type='submit' value='Show Books'>");
+		   out.println("</form>");
 		   out.println("</body>");
 		   out.println("</html>");
 		}
