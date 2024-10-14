@@ -41,6 +41,7 @@ public class Login extends HttpServlet{
 		  if(b != null && password.equals(b.getPassword())) {
 			  System.out.println("Login Successfuly");
 			  out.println("<h1>Login successfully</h1>");
+			  resp.sendRedirect("subjects");
 			  
 		  }
 		  else {

@@ -28,6 +28,7 @@ public class Cart_Servlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 
 		out.println("<h1>Cart Items</h1>");
+		resp.sendRedirect("subjects");
 	}
 
 }
