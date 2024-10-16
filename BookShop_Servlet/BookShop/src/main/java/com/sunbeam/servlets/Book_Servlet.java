@@ -6,12 +6,15 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sunbeam.Daos.BookDao;
 import com.sunbeam.entities.Book;
+import com.sunbeam.entities.Customer;
 
 @WebServlet("/books")
 public class Book_Servlet extends HttpServlet {
@@ -37,6 +40,24 @@ public class Book_Servlet extends HttpServlet {
 
 			List<Book> list = dao.findbySubject(subject);
 			
+			 Cookie[] c = req.getCookies();
+			 
+			 String userName = "";
+			 if(c != null) {
+				 for (Cookie cook : c) {
+						if(cook.getName().equals("uname")) {
+						   
+							userName = cook.getValue();
+							break;
+						}
+					 
+					}
+			 }
+			 
+			HttpSession session = req.getSession();
+			Customer cust = (Customer) session.getAttribute("User");
+			 
+			 out.printf("Hello, %s  %s %s<hr/>\n", userName, cust.getEmail(), cust.getMobile());
 			out.println("<form method='post' action='cart'>");
 			for (Book bk : list) {
 				
