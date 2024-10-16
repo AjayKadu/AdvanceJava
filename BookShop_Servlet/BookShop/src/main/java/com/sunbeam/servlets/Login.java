@@ -42,7 +42,9 @@ public class Login extends HttpServlet {
 		try (CustomerDao c1 = new CustomerDao()) {
 
 			Customer b = c1.findByEmail(email);
+			
 			if (b != null && password.equals(b.getPassword())) {
+				
 				System.out.println("Login Successfuly");
 				out.println("<h1>Login successfully</h1>");
 
@@ -55,8 +57,13 @@ public class Login extends HttpServlet {
 				List<Integer> cart = new ArrayList<>();
 			    
 				session.setAttribute("cart", cart);
-
+                  
+			      if(b.getName().equals("admin")) {
+			    	  resp.sendRedirect("booklist");
+			      }
+			      else {
 				resp.sendRedirect("subjects");
+			      }
 
 			} else {
 				System.out.println("Login Fail");

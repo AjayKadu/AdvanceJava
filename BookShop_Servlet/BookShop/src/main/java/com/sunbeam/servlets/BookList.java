@@ -73,9 +73,10 @@ public class BookList extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		out.println("</table>");
+		out.println("</table> <br><br>");
 		
 		out.printf(" <a href=\"addbook\">Add Book</a>");
+		out.printf(" <a href=\"logout\">Logout</a>");
 		
 		out.println("</body>");
 		out.println("</html>");

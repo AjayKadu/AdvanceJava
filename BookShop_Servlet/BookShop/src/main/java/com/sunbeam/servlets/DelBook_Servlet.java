@@ -3,6 +3,7 @@ package com.sunbeam.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,14 +37,20 @@ public class DelBook_Servlet extends HttpServlet {
 		try(BookDao dao = new BookDao()){
 			
 		int count = dao.deletebyId(id);
+		
 		if(count == 1) {
+			
 			String mess = "Delete Sucessfully";
+			
 			req.setAttribute("msg", mess);
-			resp.sendRedirect("booklist");
+			RequestDispatcher rd = req.getRequestDispatcher("booklist");
+			rd.forward(req, resp);
 		}
 		else {
 			String mess = "Delete Failed";
 			req.setAttribute("msg", mess);
+			RequestDispatcher rd = req.getRequestDispatcher("booklist");
+			rd.forward(req, resp);
 		}
 			 
 		}

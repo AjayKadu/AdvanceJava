@@ -13,43 +13,48 @@ import javax.servlet.http.HttpServletResponse;
 import com.sunbeam.Daos.BookDao;
 import com.sunbeam.entities.Book;
 
-@WebServlet("/addbook")
-public class AddBook_Servlet extends HttpServlet {
-
+@WebServlet ("/editbook")
+public class EditBook_Servlet extends HttpServlet{
+     
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
 		resp.setContentType("text/html");
 		PrintWriter out = resp.getWriter();
-
-		try (BookDao dao = new BookDao()) {
-			out.println("<!DOCTYPE html>\r\n" 
-		            + "<html>\r\n" 
-					+ "<head>\r\n" 
-		            + "<meta charset=\"ISO-8859-1\">\r\n"
+		
+		int id =Integer.parseInt(req.getParameter("id"));
+		
+		try(BookDao dao = new BookDao()){
+			Book bk = dao.findbyId(id);
+			
+			out.printf("<!DOCTYPE html>\r\n"
+					+ "<html>\r\n"
+					+ "<head>\r\n"
+					+ "<meta charset=\"ISO-8859-1\">\r\n"
 					+ "<title>New Book</title>\r\n"
-					+ "</head>\r\n" 
+					+ "</head>\r\n"
 					+ "<body>\r\n"
-					
 					+ "	<h3>New Book</h3>\r\n"
+					+ "	<form method=\"post\" action=\"editbook\">\r\n"
+					+ "		Id: <input type=\"text\" name=\"id\" value=\"%d\"  /> <br/><br/>\r\n"
+					+ "		Name: <input type=\"text\" name=\"name\" value=\"%s\"/> <br/><br/>\r\n"
+					+ "		Author: <input type=\"text\" name=\"author\" value=\"%s\" /> <br/><br/>\r\n"
+					+ "		Subject: <input type=\"text\" name=\"subject\" value=\"%s\" /> <br/><br/>\r\n"
+					+ "		Price: <input type=\"text\" name=\"price\" value=\"%.2f\")/> <br/><br/>\r\n"
 					
-					+ "	<form method=\"post\" action=\"addbook\">\r\n"
-					+ "		Id: <input type=\"text\" name=\"id\"  /> <br/><br/>\r\n"
-					+ "		Name: <input type=\"text\" name=\"name\"/> <br/><br/>\r\n"
-					+ "		Author: <input type=\"text\" name=\"author\" /> <br/><br/>\r\n"
-					+ "		Subject: <input type=\"text\" name=\"subject\" /> <br/><br/>\r\n"
-					+ "		Price: <input type=\"text\" name=\"price\")/> <br/><br/>\r\n"
-					
-					+ "		<input type=\"submit\" value=\"Add Book\"/>\r\n" 
-					
+					+ "		<input type=\"submit\" value=\"Edit Book\"/>\r\n"
 					+ "		<a href='booklist'>Go Back</a>"
-					+ "	</form>\r\n" + "</body>\r\n" + "</html>");
-
-		} catch (Exception e) {
+					
+					+ "	</form>\r\n"
+					+ "</body>\r\n"
+					+ "</html>", bk.getId(),bk.getName(), bk.getAuthor(), bk.getSubject(), bk.getPrice());
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -62,20 +67,19 @@ public class AddBook_Servlet extends HttpServlet {
 		try (BookDao b1 = new BookDao()) {
 
 			Book bk = new Book(id, name, author, subject, price);
-			int count = b1.save(bk);
+			int count = b1.update(bk);
 
 			if (count == 1) {
-				String msg = "Added Sucessfully";
 				
+				String msg = "Updated Sucessfully";
 				req.setAttribute("msg", msg);
+				
 				RequestDispatcher rd = req.getRequestDispatcher("booklist");
 				rd.forward(req, resp);
 			} 
 			else {
-				String msg = "Failed";
+				String msg = "Added Sucessfully";
 				req.setAttribute("msg", msg);
-				RequestDispatcher rd = req.getRequestDispatcher("booklist");
-				rd.forward(req, resp);
 			}
 		 } 
 	    	catch (Exception e) {
@@ -83,5 +87,5 @@ public class AddBook_Servlet extends HttpServlet {
 		}
 
 	}
+	}
 
-}
