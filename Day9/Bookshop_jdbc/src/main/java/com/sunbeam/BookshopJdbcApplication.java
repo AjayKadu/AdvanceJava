@@ -1,5 +1,6 @@
 package com.sunbeam;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class BookshopJdbcApplication implements CommandLineRunner {
 
 	@Autowired
 	private BookDaoImpl bookDao;
+	
+	@Autowired
+	private CustomerDaoImpl custDao;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -26,10 +30,10 @@ public class BookshopJdbcApplication implements CommandLineRunner {
 		 */
 		
 		
-		  List<Book> list = bookDao.findAllBook();
-		  for (Book book : list) {
-		  System.out.println(book); 
-		  }
+		/*
+		 * List<Book> list = bookDao.findAllBook(); for (Book book : list) {
+		 * System.out.println(book); }
+		 */
 		 
 
 		
@@ -52,6 +56,16 @@ public class BookshopJdbcApplication implements CommandLineRunner {
 		 * System.out.println(st); }
 		 */
 
+		/*
+		 * Customer cust = custDao.findByEmail("ajay@gmail.com");
+		 * System.out.println(cust);
+		 */
+		
+		Date birth = Date.valueOf("2001-11-07");
+		Customer c = new Customer(0,"jatin", "122", "6260880780", "Mp", "jatin@gmail.com", birth);
+		int count = custDao.save(c);
+		System.out.println(count);
+		
 	}
 
 }
