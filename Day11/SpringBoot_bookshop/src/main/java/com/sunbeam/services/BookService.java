@@ -12,4 +12,14 @@ public interface BookService {
 	List<Book> getBooks(String subject);
 	
 	Book getBookById(int id);
+
+	List<Book> getAllBooks();
+
+	Book editThisBook(int id);
+
+	int updateTheBook(Book b);
+
+	int deleteBook(int id);
+
+	int addToBooks(Book b);
 }

@@ -6,4 +6,6 @@ import com.sunbeam.model.Credential;
 public interface CustomerService {
 
 	Customer authenticate(Credential cr);
+
+	int addCustomer(Customer cust);
 }

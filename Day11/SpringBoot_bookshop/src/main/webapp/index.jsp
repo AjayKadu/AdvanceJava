@@ -21,6 +21,6 @@
         
     </form>
 
-    <p><a href="register">Sign Up</a></p>
+    <p><a href="signup">Sign Up</a></p>
 </body>
 </html>

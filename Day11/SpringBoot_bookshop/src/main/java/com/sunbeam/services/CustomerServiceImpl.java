@@ -21,4 +21,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return null;
 	}
 
+	@Override
+	public int addCustomer(Customer cust) {
+		
+		int count = custDao.save(cust);
+		return count;
+	}
+
 }
