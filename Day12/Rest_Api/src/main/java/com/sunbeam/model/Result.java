@@ -1,17 +1,27 @@
 package com.sunbeam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 enum Status{
 	
 	success,error;
 }
 
 
-
+@JsonInclude(Include.NON_NULL)
 public class Result {
       
 	private Status status;
+	
+	@JsonProperty("Info")
 	private String message;
 	private Object data;
+	
+	@JsonIgnore
+	private String remark;
 	
 	
 	public Result() {
