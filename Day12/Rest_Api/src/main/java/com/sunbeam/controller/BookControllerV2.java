@@ -53,7 +53,8 @@ public class BookControllerV2 {
 		try {
 			int count = bookService.deleteBook(id);
 			return ResponseEntity.created(null).body("Deleted Successfully"+count);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.internalServerError().body("Book Deleted Failed");
 		}
