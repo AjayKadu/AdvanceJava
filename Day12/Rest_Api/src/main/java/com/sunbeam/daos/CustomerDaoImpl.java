@@ -30,6 +30,36 @@ public class CustomerDaoImpl implements CustomerDao {
 		int count = jdbcTemplate.update(sql, c.getName(), c.getPassword(), c.getMobile(), c.getAddress(), c.getEmail(),c.getBirth());
 		return count;
 	}
+
+	@Override
+	public List<Customer> findallUsers() {
+	   
+		String sql="select * from customers";
+		List<Customer>list=jdbcTemplate.query(sql, custMapper);
+		return list;
+	}
+
+	@Override
+	public Customer findById(int id) {
+		String sql = "select * from customers where id=?";
+		List<Customer> list = jdbcTemplate.query(sql,custMapper, id);
+		return list == null ? null : list.get(0);
+		
+	}
+	
+	@Override
+	public int deleteById(int id) {
+		String sql = "delete from customers where id=?";
+		int count = jdbcTemplate.update(sql, id);
+		return count;
+	}
+	
+	@Override
+	public int updateById(int id, Customer cust) {
+		String sql="update customers set name=?,email=?,mobile=?,address=?,password=?,birth=? where id=?";
+		int count = jdbcTemplate.update(sql,cust.getName(),cust.getEmail(),cust.getMobile(),cust.getAddress(),cust.getPassword(),cust.getBirth(), cust.getId());
+		return count;
+	}
 	
 	
 }
